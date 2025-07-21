@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="fr-ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VendreTonAutoRapide.ca | Vente express de véhicules au Québec</title>
+    <style>
+        /* CSS Québec Modern */
+        :root {
+            --bleu-qc: #0056B3;
+            --rouge-alerte: #E31937;
+            --vert-confiance: #2E8B57;
+            --gris-fonce: #333333;
+            --gris-clair: #F5F5F5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', Arial, sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--gris-fonce);
+            background: var(--gris-clair);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header Québec Style */
+        header {
+            background: white;
+            border-bottom: 3px solid var(--bleu-qc);
+            padding: 15px 0;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap; /* Permet aux éléments de passer à la ligne */
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--bleu-qc);
+            white-space: nowrap; /* Empêche le logo de se couper */
+        }
+
+        .logo span {
+            color: var(--rouge-alerte);
+        }
+
+        .nav-links {
+            display: flex; /* Utilise flexbox pour les liens de navigation */
+            flex-wrap: wrap; /* Permet aux liens de passer à la ligne si nécessaire */
+            justify-content: flex-end; /* Aligne les liens à droite */
+            align-items: center;
+        }
+
+        .nav-links a {
+            margin-left: 20px; /* Légèrement réduit pour plus d'espace */
+            text-decoration: none;
+            color: var(--gris-fonce);
+            font-weight: 600;
+            font-size: 15px; /* Légèrement réduit pour les écrans */
+            transition: all 0.3s;
+            white-space: nowrap; /* Empêche les liens de se couper */
+        }
+
+        .nav-links a:hover {
+            color: var(--bleu-qc);
+        }
+
+        .nav-links .btn-nav {
+            background: var(--rouge-alerte);
+            color: white;
+            padding: 8px 18px; /* Réduit le padding du bouton */
+            border-radius: 5px;
+            font-size: 15px; /* Adapte la taille de la police */
+            margin-left: 20px; /* S'assure d'une marge suffisante */
+        }
+
+        /* Hero Québec */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 120px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
+
+        .hero p {
+            font-size: 20px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--rouge-alerte);
+            color: white;
+            padding: 14px 35px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 18px;
+            transition: all 0.3s;
+            border: 2px solid var(--rouge-alerte);
+        }
+
+        .btn:hover {
+            background: transparent;
+            color: white;
+            border-color: white;
+        }
+
+        /* Processus en 3 étapes */
+        .process {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 36px;
+            color: var(--bleu-qc);
+            margin-bottom: 15px;
+        }
+
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .step {
+            flex: 0 0 30%;
+            text-align: center;
+            padding: 0 15px;
+        }
+
+        .step-number {
+            background: var(--bleu-qc);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 700;
+            margin: 0 auto 20px;
+        }
+
+        .step h3 {
+            color: var(--bleu-qc);
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+
+        /* Pourquoi nous choisir */
+        .why-us {
+            background: var(--gris-clair);
+            padding: 80px 0;
+        }
+
+        .benefits {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center; /* Centrer les éléments quand ils se brisent */
+            gap: 25px; /* Ajouter un espacement entre les éléments */
+            margin-top: 40px;
+        }
+
+        .benefit {
+            flex: 0 0 calc(50% - 15px); /* Ajuster pour le gap */
+            max-width: 450px; /* Limiter la largeur sur les grands écrans */
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 0; /* Supprimer la marge bottom ici, utiliser gap sur le parent */
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .benefit-icon {
+            color: var(--vert-confiance);
+            font-size: 28px;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        /* Section Politiques */
+        .policies {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .policy-tabs {
+            display: flex;
+            border-bottom: 2px solid #eee;
+            margin-bottom: 30px;
+            flex-wrap: wrap; /* Permet aux onglets de passer à la ligne */
+            justify-content: center; /* Centrer les onglets sur mobile */
+        }
+
+        .tab-btn {
+            padding: 15px 20px; /* Réduire légèrement le padding */
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap; /* Empêche le texte de se couper */
+            font-size: 15px; /* Ajuster la taille de la police */
+        }
+
+        .tab-btn.active {
+            border-bottom: 3px solid var(--rouge-alerte);
+            color: var(--rouge-alerte);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px 0;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tab-content h3 {
+            color: var(--bleu-qc);
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+
+        .tab-content ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .tab-content li {
+            margin-bottom: 8px;
+        }
+
+        /* Témoignages */
+        .testimonials {
+            background: var(--bleu-qc);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        /* CTA */
+        .cta {
+            padding: 80px 0;
+            text-align: center;
+            background: var(--rouge-alerte);
+            color: white;
+        }
+
+        .cta h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .cta .btn {
+            background: white;
+            color: var(--rouge-alerte);
+        }
+
+        .cta .btn:hover {
+            background: transparent;
+            color: white;
+            border-color: white;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--gris-fonce);
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            gap: 20px; /* Ajouter un gap pour un meilleur espacement sur mobile */
+        }
+
+        .footer-col {
+            flex: 0 0 23%;
+        }
+
+        .footer-col h3 {
+            color: white;
+            margin-bottom: 25px;
+            font-size: 20px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col li {
+            margin-bottom: 12px;
+        }
+
+        .footer-col a {
+            color: #ccc;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .footer-col a:hover {
+            color: white;
+        }
+
+        .legal {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .step {
+                flex: 0 0 48%; /* Deux colonnes sur les tablettes */
+                margin-bottom: 40px;
+            }
+            .steps {
+                justify-content: space-around; /* Mieux répartir les étapes */
+            }
+            .benefit {
+                flex: 0 0 calc(100% - 0px); /* Une seule colonne sur tablettes/petits écrans */
+                max-width: 500px; /* Garder une taille maximale raisonnable */
+            }
+
+            .footer-col {
+                flex: 0 0 48%;
+                margin-bottom: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                align-items: flex-start; /* Aligner les éléments à gauche dans la colonne */
+            }
+
+            .logo {
+                margin-bottom: 15px;
+                width: 100%; /* Le logo prend toute la largeur disponible */
+                text-align: center; /* Centre le texte du logo */
+            }
+
+            .nav-links {
+                flex-direction: column; /* Les liens de navigation s'empilent */
+                width: 100%; /* Prend toute la largeur */
+                align-items: center; /* Centrer les liens */
+            }
+
+            .nav-links a {
+                margin: 10px 0; /* Marge verticale pour les liens */
+                font-size: 16px; /* Ajuster la taille de la police si besoin */
+            }
+
+            .nav-links .btn-nav {
+                margin-top: 15px; /* Espacement après les liens */
+                width: 80%; /* Le bouton occupe une bonne partie de la largeur */
+                max-width: 250px; /* Limiter la largeur maximale du bouton */
+                text-align: center;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            .section-title h2 {
+                font-size: 28px;
+            }
+
+            .step {
+                flex: 0 0 100%; /* Une seule colonne sur les petits écrans */
+            }
+
+            .footer-col {
+                flex: 0 0 100%; /* Chaque colonne de pied de page prend toute la largeur */
+                text-align: center; /* Centrer le contenu des colonnes du pied de page */
+            }
+
+            .footer-col ul {
+                padding-left: 0; /* Supprimer le padding par défaut des listes */
+            }
+            .footer-col li {
+                display: inline-block; /* Permet d'aligner les éléments de liste en ligne */
+                margin: 0 8px 10px; /* Marge horizontale pour les éléments */
+            }
+        }
+
+        /* Ajout d'un breakpoint pour les très petits écrans (ex: iPhone SE) */
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 28px;
+            }
+            .hero p {
+                font-size: 16px;
+            }
+            .nav-links a, .nav-links .btn-nav {
+                font-size: 14px; /* Réduire la taille de la police pour très petits écrans */
+                padding: 6px 15px; /* Réduire le padding du bouton */
+            }
+            .tab-btn {
+                font-size: 13px; /* Réduire la taille de la police des onglets */
+                padding: 10px 15px;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <div class="logo">VendreTonAuto<span>Rapide</span>.ca</div>
+            <div class="nav-links">
+                <a href="#process">Comment ça marche</a>
+                <a href="#why-us">Pourquoi nous</a>
+                <a href="#policies">Politiques</a>
+                <a href="eval.html" class="btn-nav">Évaluer mon auto</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Vendez votre voiture au Québec en 24h, sans tracas</h1>
+            <p>Service d'évaluation et d'achat express. Obtenez une offre ferme en ligne et vendez en toute confiance.</p>
+            <a href="#contact" class="btn">Obtenir une offre maintenant</a>
+        </div>
+    </section>
+
+    <section class="process" id="process">
+        <div class="container">
+            <div class="section-title">
+                <h2>Vendre en 3 étapes faciles</h2>
+                <p>Un processus rapide et transparent</p>
+            </div>
+
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Évaluation en ligne</h3>
+                    <p>Remplissez notre formulaire ou appelez-nous pour une estimation gratuite de votre véhicule.</p>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Inspection rapide</h3>
+                    <p>Nos experts vérifient votre véhicule chez vous ou dans l'un de nos centres partenaires.</p>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Paiement immédiat</h3>
+                    <p>Recevez votre paiement par virement bancaire ou chèque certifié sur place.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="why-us" id="why-us">
+        <div class="container">
+            <div class="section-title">
+                <h2>Pourquoi choisir VendreTonAutoRapide.ca?</h2>
+                <p>La solution la plus simple pour vendre votre véhicule au Québec</p>
+            </div>
+
+            <div class="benefits">
+                <div class="benefit">
+                    <div class="benefit-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div>
+                        <h3>Rapidité</h3>
+                        <p>Transaction complète en aussi peu que 24 heures. Pas d'attente pour trouver un acheteur.</p>
+                    </div>
+                </div>
+
+                <div class="benefit">
+                    <div class="benefit-icon">
+                        <i class="fas fa-hand-holding-usd"></i>
+                    </div>
+                    <div>
+                        <h3>Meilleur prix garanti</h3>
+                        <p>Nous comparons les offres du marché pour vous proposer le meilleur prix possible.</p>
+                    </div>
+                </div>
+
+                <div class="benefit">
+                    <div class="benefit-icon">
+                        <i class="fas fa-file-signature"></i>
+                    </div>
+                    <div>
+                        <h3>Processus sécurisé</h3>
+                        <p>Toutes les transactions sont documentées et conformes aux lois québécoises.</p>
+                    </div>
+                </div>
+
+                <div class="benefit">
+                    <div class="benefit-icon">
+                        <i class="fas fa-car-side"></i>
+                    </div>
+                    <div>
+                        <h3>Prise en charge complète</h3>
+                        <p>Nous gérons toute la paperasse avec la SAAQ pour un transfert sans souci.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="policies" id="policies">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nos Politiques</h2>
+                <p>Transparence et professionnalisme</p>
+            </div>
+
+            <div class="policy-tabs">
+                <button class="tab-btn active" onclick="openTab(event, 'confidentialite')">Confidentialité</button>
+                <button class="tab-btn" onclick="openTab(event, 'conditions')">Conditions</button>
+                <button class="tab-btn" onclick="openTab(event, 'paiement')">Paiement</button>
+                <button class="tab-btn" onclick="openTab(event, 'garanties')">Garanties</button>
+            </div>
+
+            <div id="confidentialite" class="tab-content active">
+                <h3>Protection de vos informations</h3>
+                <p>Nous collectons uniquement les données nécessaires pour :</p>
+                <ul>
+                    <li>Évaluer votre véhicule</li>
+                    <li>Effectuer la transaction</li>
+                    <li>Remplir les obligations légales (SAAQ)</li>
+                </ul>
+                <p>Vos informations ne seront jamais vendues ou partagées sans votre consentement explicite, conformément à la Loi 25 sur la protection des données.</p>
+            </div>
+
+            <div id="conditions" class="tab-content">
+                <h3>Conditions générales</h3>
+                <ul>
+                    <li>Le vendeur doit être le propriétaire légal du véhicule.</li>
+                    <li>Le véhicule doit être libre de tout gage (des exceptions s'appliquent).</li>
+                    <li>Toutes les informations fournies doivent être exactes.</li>
+                    <li>L'offre finale est basée sur l'inspection physique.</li>
+                </ul>
+            </div>
+
+            <div id="paiement" class="tab-content">
+                <h3>Modalités de paiement</h3>
+                <ul>
+                    <li>Virement bancaire sécurisé (dans les 24h)</li>
+                    <li>Chèque certifié (sur place)</li>
+                    <li>PAS d'argent comptant</li>
+                </ul>
+                <p>Des frais administratifs de 199 $ CA peuvent s'appliquer.</p>
+            </div>
+
+            <div id="garanties" class="tab-content">
+                <h3>Garanties et responsabilités</h3>
+                <ul>
+                    <li>Vente "en l'état" - inspection recommandée avant achat.</li>
+                    <li>Nous ne sommes pas responsables des vices cachés.</li>
+                    <li>Une inspection sera faite avant de conclure chaque transaction.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Ce que nos clients disent</h2>
+                <p>Des centaines de véhicules vendus à travers le Québec</p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="cta" id="contact">
+        <div class="container">
+            <h2>Prêt à vendre votre véhicule?</h2>
+            <p>Obtenez une évaluation gratuite en moins de 24 heures.</p>
+            <a href="eval.html" class="btn">Démarrer l'évaluation</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>VendreTonAutoRapide.ca</h3>
+                    <p>Le service le plus rapide pour vendre votre véhicule au Québec, sans commission cachée.</p>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Liens rapides</h3>
+                    <ul>
+                        <li><a href="#process">Comment ça marche</a></li>
+                        <li><a href="#why-us">Avantages</a></li>
+                        <li><a href="#policies">Politiques</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Nous joindre</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> (579) 960-5309</li>
+                        <li><i class="fas fa-envelope"></i> evaluation@vendretonautorapide.ca</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Montréal, Québec</li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Légal</h3>
+                    <ul>
+                        <li><a href="#policies">Mentions légales</a></li>
+                        <li><a href="#policies">Confidentialité</a></li>
+
+                    </ul>
+                </div>
+            </div>
+
+            <div class="legal">
+                <p>&copy; 2025 VendreTonAutoRapide.ca - Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Tab functionality
+        function openTab(evt, tabName) {
+            var i, tabcontent, tabbuttons;
+
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+
+            tabbuttons = document.getElementsByClassName("tab-btn");
+            for (i = 0; i < tabbuttons.length; i++) {
+                tabbuttons[i].classList.remove("active");
+            }
+
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
