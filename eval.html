@@ -54,7 +54,7 @@
 
         /* Hero Évaluation */
         .eval-hero {
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1552519507-6f0b813a815e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Y2FyfGVufDB8fDB8fHww&auto=format&fit=crop&w=800&q=60');
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('1.png');
             background-size: cover;
             background-position: center;
             color: white;
@@ -80,6 +80,8 @@
             max-width: 800px;
             margin: 40px auto;
             position: relative;
+            flex-wrap: wrap;
+            padding: 0 10px;
         }
 
         .process-steps::before {
@@ -97,6 +99,9 @@
             text-align: center;
             position: relative;
             z-index: 2;
+            flex: 1;
+            min-width: 100px;
+            padding: 0 5px;
         }
 
         .step-number {
@@ -217,10 +222,12 @@
             display: flex;
             border-bottom: 2px solid #eee;
             margin-bottom: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .photo-tab {
-            padding: 12px 20px;
+            padding: 12px 15px;
             background: none;
             border: none;
             font-weight: 600;
@@ -229,8 +236,10 @@
             transition: all 0.3s;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             border-bottom: 3px solid transparent;
+            font-size: 15px;
+            white-space: nowrap;
         }
 
         .photo-tab.active {
@@ -239,7 +248,7 @@
         }
 
         .photo-tab i {
-            font-size: 16px;
+            font-size: 15px;
         }
 
         .photo-tab-content {
@@ -271,7 +280,7 @@
 
         .photo-examples-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
             gap: 15px;
             margin-top: 20px;
         }
@@ -380,6 +389,74 @@
             font-weight: normal;
             color: var(--dark);
         }
+        .form-group .radio-label {
+            display: block;
+            margin-bottom: 10px;
+            margin-left: 0;
+        }
+        .form-group input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        /* Image Preview Container */
+        .image-preview-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+            border: 1px dashed var(--light-gray);
+            padding: 10px;
+            min-height: 50px;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            font-size: 14px;
+        }
+        .image-preview-container:empty::before {
+            content: "Aucune image sélectionnée.";
+            display: block;
+            color: var(--gray);
+        }
+
+        .image-preview-item {
+            position: relative;
+            max-width: 120px;
+            max-height: 100px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .image-preview-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .delete-image-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.2s ease-in-out;
+            z-index: 10;
+        }
+
+        .delete-image-btn:hover {
+            opacity: 1;
+            background-color: #C0112B;
+        }
 
         #vin-decoder-results {
             margin-top: 20px;
@@ -387,7 +464,7 @@
             border: 1px solid #ddd;
             border-radius: 5px;
             background-color: var(--light-gray);
-            display: none; /* Hide by default */
+            display: none;
         }
 
         #vin-decoder-results p {
@@ -397,6 +474,39 @@
 
         #vin-decoder-results strong {
             color: var(--primary);
+        }
+
+        /* Scanner Modal */
+        .scanner-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .scanner-video {
+            width: 90%;
+            max-width: 600px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .scanner-controls {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        #scannerCloseBtn {
+            background-color: var(--secondary);
+            color: white;
+            padding: 12px 25px;
         }
 
         /* Responsive */
@@ -419,16 +529,69 @@
 
             .photo-examples-grid {
                 grid-template-columns: 1fr 1fr;
+                gap: 10px;
             }
 
             .photo-tab {
                 padding: 8px 12px;
                 font-size: 14px;
+                gap: 5px;
+            }
+
+            .process-steps {
+                flex-direction: column;
+                align-items: center;
+                margin-bottom: 20px;
+            }
+            .process-steps::before {
+                display: none;
+            }
+            .step {
+                flex: 0 0 100%;
+                margin-bottom: 20px;
+                padding: 0;
+            }
+            .step:last-child {
+                margin-bottom: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .eval-hero h1 {
+                font-size: 28px;
+            }
+            .eval-hero p {
+                font-size: 16px;
+            }
+            .eval-form-container {
+                padding: 15px;
+            }
+            .form-header h2 {
+                font-size: 24px;
+            }
+            .form-control, .btn {
+                font-size: 14px;
+                padding: 10px 12px;
+            }
+            .photo-tab {
+                font-size: 12px;
+                padding: 6px 8px;
+            }
+            .photo-examples-grid {
+                grid-template-columns: 1fr;
+            }
+            .radio-label {
+                font-size: 14px;
+            }
+            .form-group .radio-label {
+                padding-right: 5px;
             }
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://unpkg.com/@zxing/library@0.19.1"></script>
 </head>
 <body>
     <header class="eval-header">
@@ -470,7 +633,12 @@
                 <div class="form-grid">
                     <div class="form-group full-width">
                         <label for="vin">Numéro d'identification du véhicule (VIN) <i class="fas fa-question-circle" title="Le VIN se trouve généralement sur le tableau de bord (côté conducteur) ou sur l'étiquette de la porte."></i></label>
-                        <input type="text" id="vin" class="form-control" placeholder="Entrez le VIN de 17 caractères" maxlength="17" pattern="[A-HJ-NPR-Z0-9]{17}" title="Le VIN doit contenir 17 caractères alphanumériques (sans I, O, Q)" required>
+                        <div style="display: flex; gap: 10px; margin-top: 10px;">
+                            <input type="text" id="vin" class="form-control" placeholder="Entrez le VIN de 17 caractères" maxlength="17" pattern="[A-HJ-NPR-Z0-9]{17}" title="Le VIN doit contenir 17 caractères alphanumériques (sans I, O, Q)" required style="flex: 1;">
+                            <button type="button" id="scanVinBtn" class="btn" title="Scanner avec la caméra">
+                                <i class="fas fa-camera"></i>
+                            </button>
+                        </div>
                         <button type="button" id="decodeVinBtn" class="btn" style="margin-top: 10px;">Décoder le VIN</button>
                     </div>
 
@@ -629,7 +797,8 @@
                                     <span>Cliquez ou glissez-déposez les photos de l'extérieur ici</span>
                                     <small>Formats acceptés: JPG, PNG</small>
                                 </label>
-                                <input type="file" id="photoExterieur" multiple style="display: none;">
+                                <input type="file" id="photoExterieur" class="photo-input" data-category="Exterieur" data-max-files="10" multiple style="display: none;">
+                                <div id="exterieur-preview" class="image-preview-container"></div>
                             </div>
                         </div>
 
@@ -674,7 +843,8 @@
                                     <span>Cliquez ou glissez-déposez les photos de l'intérieur ici</span>
                                     <small>Formats acceptés: JPG, PNG</small>
                                 </label>
-                                <input type="file" id="photoInterieur" multiple style="display: none;">
+                                <input type="file" id="photoInterieur" class="photo-input" data-category="Interieur" data-max-files="10" multiple style="display: none;">
+                                <div id="interieur-preview" class="image-preview-container"></div>
                             </div>
                         </div>
 
@@ -689,7 +859,8 @@
                                     <span>Cliquez ou glissez-déposez les photos des dommages ici</span>
                                     <small>Formats acceptés: JPG, PNG</small>
                                 </label>
-                                <input type="file" id="photoDommages" multiple style="display: none;">
+                                <input type="file" id="photoDommages" class="photo-input" data-category="Dommages" data-max-files="20" multiple style="display: none;">
+                                <div id="dommages-preview" class="image-preview-container"></div>
                             </div>
                         </div>
                     </div>
@@ -719,7 +890,7 @@
                         <textarea id="commentaires" class="form-control" rows="4" placeholder="Informations supplémentaires sur votre véhicule"></textarea>
                     </div>
 
-                    <button type="submit" class="btn btn-block">Obtenir mon évaluation gratuite</button>
+                    <button type="submit" class="btn btn-block">Générer l'évaluation PDF</button>
                 </div>
             </form>
         </div>
@@ -728,7 +899,7 @@
     <footer style="text-align: center; padding: 30px 0; color: var(--gray); font-size: 14px;">
         <div class="container">
             <p>&copy; 2025 VendreTonAutoRapide.ca. Tous droits réservés.</p>
-            <p>Repentigny, Québec</p>
+            <p>Montréal, Québec</p>
         </div>
     </footer>
 
@@ -752,7 +923,7 @@
         // VIN Decoder Logic
         document.getElementById('decodeVinBtn').addEventListener('click', async function() {
             const vinInput = document.getElementById('vin');
-            const vin = vinInput.value.trim().toUpperCase(); // Get VIN and convert to uppercase
+            const vin = vinInput.value.trim().toUpperCase();
 
             const vinResultsDiv = document.getElementById('vin-decoder-results');
             const decodedMarque = document.getElementById('decodedMarque');
@@ -761,14 +932,12 @@
             const decodedCarburant = document.getElementById('decodedCarburant');
             const decodedTransmission = document.getElementById('decodedTransmission');
 
-            // Simple client-side validation for VIN length and format
             if (vin.length !== 17 || !/^[A-HJ-NPR-Z0-9]{17}$/.test(vin)) {
                 alert('Veuillez entrer un VIN valide de 17 caractères (sans les lettres I, O, Q).');
-                vinResultsDiv.style.display = 'none'; // Cache les résultats si le VIN est invalide
+                vinResultsDiv.style.display = 'none';
                 return;
             }
 
-            // Affiche un message de chargement
             vinResultsDiv.style.display = 'block';
             decodedMarque.textContent = 'Décodage en cours...';
             decodedModele.textContent = '';
@@ -776,56 +945,41 @@
             decodedCarburant.textContent = '';
             decodedTransmission.textContent = '';
 
-
-            // --- DÉBUT DE LA LOGIQUE SERVEUR/API (À ADAPTER POUR UNE PRODUCTION SÉCURISÉE) ---
-            // Cette requête est effectuée directement côté client vers l'API publique NHTSA.
-            // Pour une application réelle et sécurisée (protéger les clés API, gérer les limites de requêtes),
-            // il est FORTEMENT recommandé de faire passer cette requête par votre propre serveur backend.
-
             try {
-                // EXEMPLE DE REQUÊTE DIRECTE À L'API NHTSA (pour démonstration seulement)
                 const response = await fetch('https://vpic.nhtsa.dot.gov/api/vehicles/decodevin/' + vin + '?format=json');
 
                 if (!response.ok) {
-                    // Si la réponse HTTP n'est pas OK (ex: 404, 500)
                     throw new Error('Erreur lors de la communication avec le service de décodage VIN. Statut: ' + response.status);
                 }
 
                 const data = await response.json();
-                console.log(data); // Pour le débogage: affiche toutes les données brutes de l'API dans la console du navigateur
+                console.log(data);
 
-                // Initialise les valeurs par défaut
                 let marque = 'Non trouvée';
                 let modele = 'Non trouvé';
                 let annee = 'Non trouvée';
-                let carburantApiValue = ''; // Stocke la valeur brute du carburant de l'API
-                let transmissionApiValue = ''; // Stocke la valeur brute de la transmission de l'API
+                let carburantApiValue = '';
+                let transmissionApiValue = '';
 
                 if (data && data.Results && data.Results.length > 0) {
                     data.Results.forEach(item => {
-                        // Récupération de la marque
                         if (item.Variable === "Make" && item.Value && item.Value !== "Not Applicable") {
                             marque = item.Value;
                         }
-                        // Récupération du modèle
                         if (item.Variable === "Model" && item.Value && item.Value !== "Not Applicable") {
                             modele = item.Value;
                         }
-                        // Récupération de l'année
                         if (item.Variable === "Model Year" && item.Value && item.Value !== "Not Applicable") {
                             annee = item.Value;
                         }
-                        // Récupération du type de carburant (valeur brute de l'API)
                         if (item.Variable === "Fuel Type - Primary" && item.Value && item.Value !== "Not Applicable") {
                             carburantApiValue = item.Value;
                         }
-                        // Récupération de la transmission (valeur brute de l'API)
                         if (item.Variable === "Transmission Style" && item.Value && item.Value !== "Not Applicable") {
                             transmissionApiValue = item.Value;
                         }
                     });
 
-                    // Cas particulier où l'API indique que le VIN est invalide via un message
                     if (data.Message && data.Message.includes("VIN not found")) {
                         marque = 'VIN Invalide';
                         modele = 'Non trouvé';
@@ -835,57 +989,47 @@
                     }
 
                 } else if (data && data.Message) {
-                    // Si l'API retourne un message d'erreur général (ex: VIN invalide, ou autre souci)
                     marque = 'Erreur VIN';
-                    modele = data.Message; // Affiche le message d'erreur de l'API
+                    modele = data.Message;
                     annee = '';
                     carburantApiValue = '';
                     transmissionApiValue = '';
                 }
 
-                // Affiche les résultats décodés dans la section d'affichage (pour l'utilisateur)
                 decodedMarque.textContent = marque;
                 decodedModele.textContent = modele;
                 decodedAnnee.textContent = annee;
-                decodedCarburant.textContent = carburantApiValue || 'N/A'; // Affiche la valeur brute si non vide
-                decodedTransmission.textContent = transmissionApiValue || 'N/A'; // Affiche la valeur brute si non vide
+                decodedCarburant.textContent = carburantApiValue || 'N/A';
+                decodedTransmission.textContent = transmissionApiValue || 'N/A';
 
-                // --- Pré-remplir les champs du formulaire ---
-
-                // Pré-remplir la marque
                 if (marque !== 'Non trouvée' && marque !== 'Erreur VIN') {
                     const marqueSelect = document.getElementById('marque');
                     let foundMarque = false;
-                    // Nettoyer la marque pour la comparaison (ex: "Ford Motor Company" -> "fordmotorcompany")
                     const cleanMarque = marque.toLowerCase().replace(/[^a-z0-9]/g, '');
 
                     for (let i = 0; i < marqueSelect.options.length; i++) {
-                        // Comparer la valeur de l'option (en minuscules et nettoyée) avec la marque décodée
                         if (marqueSelect.options[i].value.toLowerCase().replace(/[^a-z0-9]/g, '') === cleanMarque) {
-                            marqueSelect.value = marqueSelect.options[i].value; // Sélectionner l'option avec la valeur exacte
+                            marqueSelect.value = marqueSelect.options[i].value;
                             foundMarque = true;
                             break;
                         }
                     }
                     if (!foundMarque) {
-                        marqueSelect.value = "Autre"; // Sélectionne "Autre" si aucune correspondance exacte n'est trouvée
+                        marqueSelect.value = "Autre";
                     }
                 }
 
-                // Pré-remplir le modèle
                 if (modele !== 'Non trouvé' && modele !== 'Erreur VIN') {
                     document.getElementById('modele').value = modele;
                 }
 
-                // Pré-remplir l'année
                 if (annee !== 'Non trouvée' && annee !== 'Erreur VIN') {
                     document.getElementById('annee').value = annee;
                 }
 
-                // Pré-remplir le carburant
                 if (carburantApiValue && carburantApiValue !== 'Non trouvé' && carburantApiValue !== 'Erreur VIN') {
                     const carburantSelect = document.getElementById('carburant');
-                    const cleanCarburantApi = carburantApiValue.toLowerCase(); // Valeur API en minuscules
+                    const cleanCarburantApi = carburantApiValue.toLowerCase();
 
                     if (cleanCarburantApi.includes('gasoline') || cleanCarburantApi.includes('petrol')) {
                         carburantSelect.value = 'Essence';
@@ -896,25 +1040,22 @@
                     } else if (cleanCarburantApi.includes('electric') || cleanCarburantApi.includes('ev')) {
                         carburantSelect.value = 'Électrique';
                     } else {
-                        carburantSelect.value = ''; // Réinitialise si pas de correspondance
+                        carburantSelect.value = '';
                     }
                 }
 
-                // Pré-remplir la transmission
                 if (transmissionApiValue && transmissionApiValue !== 'Non trouvée' && transmissionApiValue !== 'Erreur VIN') {
                     const transmissionSelect = document.getElementById('transmission');
-                    const cleanTransmissionApi = transmissionApiValue.toLowerCase(); // Valeur API en minuscules
+                    const cleanTransmissionApi = transmissionApiValue.toLowerCase();
 
                     if (cleanTransmissionApi.includes('auto') || cleanTransmissionApi.includes('automatic')) {
                         transmissionSelect.value = 'Automatique';
                     } else if (cleanTransmissionApi.includes('manual') || cleanTransmissionApi.includes('man')) {
                         transmissionSelect.value = 'Manuelle';
                     } else {
-                        transmissionSelect.value = 'Autre'; // Définit sur "Autre" si pas de correspondance claire
+                        transmissionSelect.value = 'Autre';
                     }
                 }
-
-
             } catch (error) {
                 console.error('Erreur de décodage VIN:', error);
                 decodedMarque.textContent = 'Erreur.';
@@ -922,19 +1063,387 @@
                 decodedAnnee.textContent = 'Veuillez vérifier le numéro.';
                 decodedCarburant.textContent = '';
                 decodedTransmission.textContent = '';
-                vinResultsDiv.style.display = 'block'; // S'assurer que la boîte est visible pour l'erreur
+                vinResultsDiv.style.display = 'block';
             }
-
-            // --- FIN DE LA LOGIQUE SERVEUR/API ---
         });
 
-        // Form submission logic
-        document.getElementById('evaluationForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Empêche l'envoi par défaut du formulaire
-            alert('Votre formulaire a été soumis! Nous vous contacterons sous peu.');
-            // Ici, vous ajouteriez la logique pour envoyer toutes les données du formulaire à votre serveur.
-            // Cela inclurait le VIN et toutes les autres informations du véhicule et de contact,
-            // ainsi que les photos téléversées (qui nécessitent un traitement côté serveur).
+        // Scanner VIN
+        document.getElementById('scanVinBtn').addEventListener('click', async () => {
+            const codeReader = new ZXing.BrowserMultiFormatReader();
+            
+            const modal = document.createElement('div');
+            modal.className = 'scanner-modal';
+            
+            const video = document.createElement('video');
+            video.className = 'scanner-video';
+            video.setAttribute('playsinline', '');
+            
+            const controls = document.createElement('div');
+            controls.className = 'scanner-controls';
+            
+            const closeBtn = document.createElement('button');
+            closeBtn.id = 'scannerCloseBtn';
+            closeBtn.className = 'btn';
+            closeBtn.innerHTML = '<i class="fas fa-times"></i> Fermer le scanner';
+            
+            modal.appendChild(video);
+            modal.appendChild(controls);
+            controls.appendChild(closeBtn);
+            document.body.appendChild(modal);
+
+            closeBtn.addEventListener('click', () => {
+                codeReader.reset();
+                modal.remove();
+            });
+
+            try {
+                const result = await codeReader.decodeFromVideoDevice(null, video, (result, err) => {
+                    if (result) {
+                        const scannedVin = result.text.toUpperCase();
+                        if (/^[A-HJ-NPR-Z0-9]{17}$/.test(scannedVin)) {
+                            document.getElementById('vin').value = scannedVin;
+                            codeReader.reset();
+                            modal.remove();
+                            document.getElementById('decodeVinBtn').click();
+                        } else {
+                            alert('Code scanné invalide. Le VIN doit contenir 17 caractères alphanumériques (sans I, O, Q)');
+                        }
+                    }
+                    if (err && !(err instanceof ZXing.NotFoundException)) {
+                        console.error(err);
+                        alert(`Erreur de scan: ${err}`);
+                        modal.remove();
+                    }
+                });
+            } catch (error) {
+                console.error('Erreur:', error);
+                alert('Accès à la caméra refusé ou appareil non supporté');
+                modal.remove();
+            }
+        });
+
+        // Store uploaded images as Data URLs with unique IDs for deletion
+        const uploadedImages = {
+            'Exterieur': [],
+            'Interieur': [],
+            'Dommages': []
+        };
+
+        // Function to delete an image
+        function deleteImage(categoryId, imageId) {
+            uploadedImages[categoryId] = uploadedImages[categoryId].filter(img => img.id !== imageId);
+            const previewItem = document.getElementById(imageId);
+            if (previewItem) {
+                previewItem.remove();
+            }
+            const previewContainer = document.getElementById(`${categoryId.toLowerCase()}-preview`);
+            if (uploadedImages[categoryId].length === 0 && previewContainer.querySelector('.image-preview-item') === null) {
+                previewContainer.innerHTML = '';
+            }
+        }
+
+        document.querySelectorAll('.photo-input').forEach(input => {
+            const uploadLabel = input.previousElementSibling;
+            const category = input.dataset.category;
+            const maxFiles = parseInt(input.dataset.maxFiles, 10);
+            const previewContainer = document.getElementById(`${category.toLowerCase()}-preview`);
+
+            input.addEventListener('change', function(event) {
+                handleFiles(event.target.files, category, maxFiles, previewContainer);
+            });
+
+            uploadLabel.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadLabel.classList.add('drag-over');
+            });
+
+            uploadLabel.addEventListener('dragleave', (e) => {
+                uploadLabel.classList.remove('drag-over');
+            });
+
+            uploadLabel.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadLabel.classList.remove('drag-over');
+                const files = e.dataTransfer.files;
+                handleFiles(files, category, maxFiles, previewContainer);
+            });
+
+            function handleFiles(files, categoryId, maxFiles, previewContainerElement) {
+                const currentImageCount = uploadedImages[categoryId].length;
+                let filesToAddCount = 0;
+                Array.from(files).forEach(file => {
+                    if (file.type.startsWith('image/')) {
+                        filesToAddCount++;
+                    }
+                });
+
+                if (currentImageCount + filesToAddCount > maxFiles) {
+                    alert(`Vous ne pouvez télécharger qu'un maximum de ${maxFiles} photos pour la section "${categoryId}". Vous avez actuellement ${currentImageCount} photos.`);
+                    return;
+                }
+
+                Array.from(files).forEach(file => {
+                    if (file.type.startsWith('image/')) {
+                        if (uploadedImages[categoryId].length >= maxFiles) {
+                            console.warn(`Limit reached for ${categoryId}. Skipping file.`);
+                            return;
+                        }
+
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            const imgDataUrl = e.target.result;
+                            const imageId = `img-${categoryId}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+
+                            uploadedImages[categoryId].push({
+                                id: imageId,
+                                dataUrl: imgDataUrl,
+                                file: file
+                            });
+
+                            const imgPreviewItem = document.createElement('div');
+                            imgPreviewItem.className = 'image-preview-item';
+                            imgPreviewItem.id = imageId;
+
+                            const imgElement = document.createElement('img');
+                            imgElement.src = imgDataUrl;
+                            imgElement.alt = `Photo ${categoryId}`;
+
+                            const deleteBtn = document.createElement('button');
+                            deleteBtn.className = 'delete-image-btn';
+                            deleteBtn.innerHTML = '&times;';
+                            deleteBtn.title = 'Supprimer cette photo';
+                            deleteBtn.onclick = (e) => {
+                                e.stopPropagation();
+                                deleteImage(categoryId, imageId);
+                            };
+
+                            imgPreviewItem.appendChild(imgElement);
+                            imgPreviewItem.appendChild(deleteBtn);
+                            previewContainerElement.appendChild(imgPreviewItem);
+                        };
+                        reader.readAsDataURL(file);
+                    } else {
+                        alert('Seuls les fichiers image sont acceptés.');
+                    }
+                });
+            }
+        });
+
+        // Form submission logic for PDF generation
+        document.getElementById('evaluationForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            if (!this.checkValidity()) {
+                alert("Veuillez remplir tous les champs obligatoires du formulaire.");
+                this.reportValidity();
+                return;
+            }
+
+            const submitBtn = event.submitter;
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Génération du PDF...';
+
+            try {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+
+                let yPos = 20;
+
+                doc.setFontSize(22);
+                doc.setTextColor(30, 30, 30);
+                doc.text("Rapport d'Évaluation Véhicule", 105, yPos, { align: 'center' });
+                yPos += 15;
+
+                doc.setFontSize(16);
+                doc.setTextColor(0, 86, 179);
+                doc.text("Informations du Véhicule", 20, yPos);
+                yPos += 10;
+                doc.setDrawColor(0, 86, 179);
+                doc.line(20, yPos, 190, yPos);
+                yPos += 10;
+
+                doc.setFontSize(12);
+                doc.setTextColor(30, 30, 30);
+                const vin = document.getElementById('vin').value;
+                const marque = document.getElementById('marque').value;
+                const modele = document.getElementById('modele').value;
+                const annee = document.getElementById('annee').value;
+                const kilometrage = document.getElementById('kilometrage').value;
+                const transmission = document.getElementById('transmission').value;
+                const carburant = document.getElementById('carburant').value;
+                const etat = document.querySelector('input[name="etat"]:checked').value;
+
+                const vehicleInfo = [
+                    `VIN: ${vin}`,
+                    `Marque: ${marque}`,
+                    `Modèle: ${modele}`,
+                    `Année: ${annee}`,
+                    `Kilométrage: ${kilometrage} km`,
+                    `Transmission: ${transmission}`,
+                    `Type de carburant: ${carburant}`,
+                    `État général: ${etat}`
+                ];
+
+                vehicleInfo.forEach(info => {
+                    if (yPos > 280) {
+                        doc.addPage();
+                        yPos = 20;
+                        doc.setFontSize(16);
+                        doc.setTextColor(0, 86, 179);
+                        doc.text("Informations du Véhicule (suite)", 20, yPos);
+                        yPos += 10;
+                        doc.line(20, yPos, 190, yPos);
+                        yPos += 10;
+                        doc.setFontSize(12);
+                        doc.setTextColor(30, 30, 30);
+                    }
+                    doc.text(info, 20, yPos);
+                    yPos += 7;
+                });
+                yPos += 10;
+
+                doc.setFontSize(16);
+                doc.setTextColor(0, 86, 179);
+                if (yPos > 270) {
+                    doc.addPage();
+                    yPos = 20;
+                }
+                doc.text("Vos Coordonnées", 20, yPos);
+                yPos += 10;
+                doc.setDrawColor(0, 86, 179);
+                doc.line(20, yPos, 190, yPos);
+                yPos += 10;
+
+                doc.setFontSize(12);
+                doc.setTextColor(30, 30, 30);
+                const nom = document.getElementById('nom').value;
+                const telephone = document.getElementById('telephone').value;
+                const courriel = document.getElementById('courriel').value;
+                const commentaires = document.getElementById('commentaires').value;
+
+                const contactInfo = [
+                    `Nom complet: ${nom}`,
+                    `Téléphone: ${telephone}`,
+                    `Courriel: ${courriel}`
+                ];
+
+                contactInfo.forEach(info => {
+                     if (yPos > 280) {
+                        doc.addPage();
+                        yPos = 20;
+                        doc.setFontSize(16);
+                        doc.setTextColor(0, 86, 179);
+                        doc.text("Vos Coordonnées (suite)", 20, yPos);
+                        yPos += 10;
+                        doc.line(20, yPos, 190, yPos);
+                        yPos += 10;
+                        doc.setFontSize(12);
+                        doc.setTextColor(30, 30, 30);
+                    }
+                    doc.text(info, 20, yPos);
+                    yPos += 7;
+                });
+                yPos += 10;
+
+                if (commentaires) {
+                     if (yPos > 270) {
+                        doc.addPage();
+                        yPos = 20;
+                    }
+                    doc.setFontSize(16);
+                    doc.setTextColor(0, 86, 179);
+                    doc.text("Commentaires Additionnels", 20, yPos);
+                    yPos += 10;
+                    doc.setDrawColor(0, 86, 179);
+                    doc.line(20, yPos, 190, yPos);
+                    yPos += 10;
+
+                    doc.setFontSize(12);
+                    doc.setTextColor(30, 30, 30);
+                    const textLines = doc.splitTextToSize(commentaires, 170);
+                    textLines.forEach(line => {
+                         if (yPos > 280) {
+                            doc.addPage();
+                            yPos = 20;
+                            doc.setFontSize(16);
+                            doc.setTextColor(0, 86, 179);
+                            doc.text("Commentaires Additionnels (suite)", 20, yPos);
+                            yPos += 10;
+                            doc.line(20, yPos, 190, yPos);
+                            yPos += 10;
+                            doc.setFontSize(12);
+                            doc.setTextColor(30, 30, 30);
+                        }
+                        doc.text(line, 20, yPos);
+                        yPos += 7;
+                    });
+                    yPos += 10;
+                }
+
+                const imageCategories = ['Exterieur', 'Interieur', 'Dommages'];
+                for (const category of imageCategories) {
+                    if (uploadedImages[category] && uploadedImages[category].length > 0) {
+                        if (yPos > 250) {
+                            doc.addPage();
+                            yPos = 20;
+                        }
+                        doc.setFontSize(16);
+                        doc.setTextColor(0, 86, 179);
+                        doc.text(`Photos: ${category}`, 20, yPos);
+                        yPos += 10;
+                        doc.setDrawColor(0, 86, 179);
+                        doc.line(20, yPos, 190, yPos);
+                        yPos += 10;
+                        doc.setFontSize(12);
+                        doc.setTextColor(30, 30, 30);
+
+                        let xOffset = 20;
+                        const imageWidth = 80;
+                        const imageHeight = 60;
+                        const margin = 10;
+
+                        for (const imgObj of uploadedImages[category]) {
+                            const imgDataUrl = imgObj.dataUrl;
+
+                            if (yPos + imageHeight + margin > 290) {
+                                doc.addPage();
+                                yPos = 20;
+                                xOffset = 20;
+                            }
+
+                            try {
+                                doc.addImage(imgDataUrl, 'JPEG', xOffset, yPos, imageWidth, imageHeight);
+                                doc.text(`${category} Photo`, xOffset, yPos + imageHeight + 5);
+                                xOffset += imageWidth + margin;
+
+                                if (xOffset + imageWidth > 190) {
+                                    xOffset = 20;
+                                    yPos += imageHeight + 20;
+                                }
+                            } catch (imgError) {
+                                console.error(`Error adding image to PDF for category ${category}:`, imgError);
+                                doc.text(`[Image non chargée - ${category}]`, xOffset, yPos + (imageHeight / 2));
+                                xOffset += imageWidth + margin;
+                                if (xOffset + imageWidth > 190) {
+                                    xOffset = 20;
+                                    yPos += imageHeight + 20;
+                                }
+                            }
+                        }
+                        yPos += imageHeight + 20;
+                    }
+                }
+
+                doc.save('Evaluation_Vehicule.pdf');
+                alert('Le rapport PDF a été généré et téléchargé!');
+
+            } catch (error) {
+                console.error('Erreur lors de la génération du PDF:', error);
+                alert('Une erreur est survenue lors de la génération du PDF. Veuillez réessayer.');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Générer l\'évaluation PDF';
+            }
         });
     </script>
 </body>
