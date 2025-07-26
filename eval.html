@@ -824,201 +824,222 @@
                                     <span>Cliquez ou glissez-déposez les photos des dommages ici</span>
                                     <small>Formats acceptés: JPG, PNG</small>
                                 </label>
-                                <input type="file" id="photoDommages" name="photoDommages[]" class="photo-input" data-category="Dommages" data-max-files="10" multiple style="display: none;">
+                                <input type="file" id="photoDommages" name="photoDommages[]" class="photo-input" data-category="Dommages" data-max-files="20" multiple style="display: none;">
                                 <div id="dommages-preview" class="image-preview-container"></div>
                             </div>
                         </div>
                     </div>
-                </div>
+                    </div>
                 
-                <hr style="margin-top: 40px; margin-bottom: 30px; border-color: #eee;">
-
-                <div class="form-header">
-                    <h2>Vos Coordonnées</h2>
-                    <p>Pour vous envoyer l'évaluation et vous contacter</p>
-                </div>
-
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="prenom">Prénom</label>
-                        <input type="text" id="prenom" name="prenom" class="form-control" placeholder="Votre prénom" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="nom">Nom de famille</label>
-                        <input type="text" id="nom" name="nom" class="form-control" placeholder="Votre nom de famille" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Courriel</label>
-                        <input type="email" id="email" name="email" class="form-control" placeholder="votre@courriel.com" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="telephone">Numéro de téléphone</label>
-                        <input type="tel" id="telephone" name="telephone" class="form-control" placeholder="Ex: 514-123-4567" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" title="Format: XXX-XXX-XXXX" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="province">Province</label>
-                        <select id="province" name="province" class="form-control" required>
-                            <option value="">Sélectionnez une province</option>
-                            <option value="AB">Alberta</option>
-                            <option value="BC">Colombie-Britannique</option>
-                            <option value="MB">Manitoba</option>
-                            <option value="NB">Nouveau-Brunswick</option>
-                            <option value="NL">Terre-Neuve-et-Labrador</option>
-                            <option value="NS">Nouvelle-Écosse</option>
-                            <option value="ON">Ontario</option>
-                            <option value="PE">Île-du-Prince-Édouard</option>
-                            <option value="QC">Québec</option>
-                            <option value="SK">Saskatchewan</option>
-                            <option value="NT">Territoires du Nord-Ouest</option>
-                            <option value="NU">Nunavut</option>
-                            <option value="YT">Yukon</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="ville">Ville</label>
-                        <input type="text" id="ville" name="ville" class="form-control" placeholder="Votre ville" required>
-                    </div>
-                    <div class="form-group full-width">
-                        <label for="commentaires">Commentaires supplémentaires (facultatif)</label>
-                        <textarea id="commentaires" name="commentaires" class="form-control" rows="4" placeholder="Ex: Modifications apportées, historique d'accidents, etc."></textarea>
-                    </div>
-                </div>
-
-                <div class="form-group full-width" style="margin-top: 30px;">
-                    <button type="submit" class="btn btn-block">Obtenir mon évaluation gratuite !</button>
+                <div class="full-width" style="margin-top: 40px; text-align: center;">
+                    <button type="submit" class="btn">Soumettre l'évaluation</button>
                 </div>
             </form>
         </div>
     </div>
 
     <script>
-        // Populate years dropdown
-        const anneeSelect = document.getElementById('annee');
-        const currentYear = new Date().getFullYear();
-        for (let i = currentYear; i >= 1990; i--) { // Years from current year back to 1990
-            const option = document.createElement('option');
-            option.value = i;
-            option.textContent = i;
-            anneeSelect.appendChild(option);
-        }
+        document.addEventListener('DOMContentLoaded', function() {
+            // Populate year dropdown
+            const yearSelect = document.getElementById('annee');
+            const currentYear = new Date().getFullYear();
+            for (let i = currentYear + 1; i >= 1990; i--) { // Years from next year down to 1990
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = i;
+                yearSelect.appendChild(option);
+            }
 
-        // Photo tabs functionality
-        document.querySelectorAll('.photo-tab').forEach(button => {
-            button.addEventListener('click', () => {
-                // Remove active class from all tabs and content
-                document.querySelectorAll('.photo-tab').forEach(btn => btn.classList.remove('active'));
-                document.querySelectorAll('.photo-tab-content').forEach(content => content.classList.remove('active'));
+            // Photo tabs functionality
+            const photoTabs = document.querySelectorAll('.photo-tab');
+            const photoContents = document.querySelectorAll('.photo-tab-content');
 
-                // Add active class to clicked tab and its content
-                button.classList.add('active');
-                document.getElementById(button.dataset.tab).classList.add('active');
-            });
-        });
+            photoTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    photoTabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
 
-        // Image preview functionality
-        document.querySelectorAll('.photo-input').forEach(inputElement => {
-            inputElement.addEventListener('change', (event) => {
-                const previewContainerId = inputElement.id + '-preview';
-                const previewContainer = document.getElementById(previewContainerId);
-                previewContainer.innerHTML = ''; // Clear previous previews
-
-                const files = event.target.files;
-                if (files.length === 0) {
-                    return; // No files selected
-                }
-
-                Array.from(files).forEach((file, index) => {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        const previewItem = document.createElement('div');
-                        previewItem.className = 'image-preview-item';
-                        
-                        const img = document.createElement('img');
-                        img.src = e.target.result;
-                        img.alt = `Preview ${index}`;
-                        previewItem.appendChild(img);
-
-                        const deleteBtn = document.createElement('button');
-                        deleteBtn.className = 'delete-image-btn';
-                        deleteBtn.innerHTML = '&times;';
-                        deleteBtn.onclick = () => {
-                            // This part is for visual only. Actual file handling is via PHP.
-                            // In a full JS solution, you'd manage a DataTransfer object or re-create input.
-                            previewItem.remove();
-                            // Note: Removing from visual preview does NOT remove from input.files directly.
-                            // For true removal from input.files, a more complex JS solution is needed.
-                            // However, since PHP processes based on what's *actually* submitted,
-                            // if you replace the input's files property with a new FileList,
-                            // only the visually present images will be submitted.
-                            // For simplicity, we rely on server-side processing to handle actual uploads.
-                        };
-                        previewItem.appendChild(deleteBtn);
-                        previewContainer.appendChild(previewItem);
-                    };
-                    reader.readAsDataURL(file);
+                    const targetTab = this.dataset.tab;
+                    photoContents.forEach(content => {
+                        if (content.id === targetTab) {
+                            content.classList.add('active');
+                        } else {
+                            content.classList.remove('active');
+                        }
+                    });
                 });
             });
-        });
 
-        // VIN Decoder (Placeholder - Requires actual API integration)
-        document.getElementById('decodeVinBtn').addEventListener('click', async () => {
+            // Image upload preview functionality
+            const photoInputs = document.querySelectorAll('.photo-input');
+            const uploadedFiles = {}; // Store File objects per category
+
+            photoInputs.forEach(input => {
+                const category = input.dataset.category;
+                const maxFiles = parseInt(input.dataset.maxFiles);
+                const previewContainer = document.getElementById(`${category.toLowerCase()}-preview`);
+                uploadedFiles[category] = []; // Initialize array for each category
+
+                input.addEventListener('change', function(event) {
+                    const files = Array.from(event.target.files);
+                    
+                    if (uploadedFiles[category].length + files.length > maxFiles) {
+                        alert(`Vous ne pouvez téléverser que ${maxFiles} photos pour la catégorie "${category}".`);
+                        event.target.value = ''; // Clear selection
+                        return;
+                    }
+
+                    files.forEach(file => {
+                        if (file.type.startsWith('image/') && uploadedFiles[category].length < maxFiles) {
+                            uploadedFiles[category].push(file); // Add to our conceptual list
+
+                            const reader = new FileReader();
+                            reader.onload = function(e) {
+                                const previewItem = document.createElement('div');
+                                previewItem.classList.add('image-preview-item');
+                                previewItem.innerHTML = `
+                                    <img src="${e.target.result}" alt="${file.name}">
+                                    <button type="button" class="delete-image-btn" data-file-name="${file.name}">&times;</button>
+                                `;
+                                previewContainer.appendChild(previewItem);
+                            };
+                            reader.readAsDataURL(file);
+                        }
+                    });
+                    // Reset the input value so the same file can be selected again after deletion
+                    event.target.value = ''; 
+                });
+
+                // Handle drag and drop
+                const uploadLabel = input.closest('.upload-box').querySelector('.upload-label');
+                uploadLabel.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    uploadLabel.style.borderColor = varCss('--primary');
+                    uploadLabel.style.backgroundColor = 'rgba(0, 86, 179, 0.05)';
+                });
+
+                uploadLabel.addEventListener('dragleave', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    uploadLabel.style.borderColor = '#ccc';
+                    uploadLabel.style.backgroundColor = 'white';
+                });
+
+                uploadLabel.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    uploadLabel.style.borderColor = '#ccc';
+                    uploadLabel.style.backgroundColor = 'white';
+                    
+                    const files = Array.from(e.dataTransfer.files);
+                    if (uploadedFiles[category].length + files.length > maxFiles) {
+                        alert(`Vous ne pouvez téléverser que ${maxFiles} photos pour la catégorie "${category}".`);
+                        return;
+                    }
+
+                    // Manually trigger change event for consistency with file input
+                    const dataTransfer = new DataTransfer();
+                    files.forEach(file => dataTransfer.items.add(file));
+                    input.files = dataTransfer.files;
+                    input.dispatchEvent(new Event('change'));
+                });
+
+                // Handle image deletion
+                previewContainer.addEventListener('click', function(event) {
+                    if (event.target.classList.contains('delete-image-btn')) {
+                        const fileNameToDelete = event.target.dataset.fileName;
+                        // Remove from our conceptual list
+                        uploadedFiles[category] = uploadedFiles[category].filter(file => file.name !== fileNameToDelete);
+                        // Remove from DOM
+                        event.target.closest('.image-preview-item').remove();
+                    }
+                });
+            });
+
+
+            // VIN Decoding functionality (unchanged, but noted that it won't be sent directly by process_evaluation.php)
             const vinInput = document.getElementById('vin');
-            const vin = vinInput.value;
-            const vinResultsDiv = document.getElementById('vin-decoder-results');
-            
-            if (vin.length === 17) {
-                vinResultsDiv.style.display = 'block'; // Show results section
-                // This is a placeholder for actual API call.
-                // In a real scenario, you'd make an AJAX call to a server-side script
-                // that safely communicates with a VIN decoding API.
-                
-                // Example: Mocking data for demonstration
-                const mockData = {
-                    Marque: "Toyota",
-                    Modele: "RAV4",
-                    Annee: "2022",
-                    Carburant: "Essence",
-                    Transmission: "Automatique"
-                };
+            const decodeVinBtn = document.getElementById('decodeVinBtn');
+            const vinDecoderResults = document.getElementById('vin-decoder-results');
+            const decodedMarque = document.getElementById('decodedMarque');
+            const decodedModele = document.getElementById('decodedModele');
+            const decodedAnnee = document.getElementById('decodedAnnee');
+            const decodedCarburant = document.getElementById('decodedCarburant');
+            const decodedTransmission = document.getElementById('decodedTransmission');
 
-                document.getElementById('decodedMarque').textContent = mockData.Marque;
-                document.getElementById('decodedModele').textContent = mockData.Modele;
-                document.getElementById('decodedAnnee').textContent = mockData.Annee;
-                document.getElementById('decodedCarburant').textContent = mockData.Carburant;
-                document.getElementById('decodedTransmission').textContent = mockData.Transmission;
-
-                // Optionally auto-fill form fields
-                document.getElementById('marque').value = mockData.Marque;
-                document.getElementById('modele').value = mockData.Modele;
-                document.getElementById('annee').value = mockData.Annee;
-                document.getElementById('carburant').value = mockData.Carburant;
-                document.getElementById('transmission').value = mockData.Transmission;
-
-            } else {
-                alert('Veuillez entrer un VIN de 17 caractères valide.');
-                vinResultsDiv.style.display = 'none';
+            // Prefill VIN from URL if present (from scanner.html)
+            const urlParams = new URLSearchParams(window.location.search);
+            const vinFromUrl = urlParams.get('vinScanned');
+            if (vinFromUrl) {
+                vinInput.value = vinFromUrl;
+                // Optionally trigger decode if VIN is pre-filled
+                // decodeVinBtn.click();
             }
-        });
 
-        // Handle scanVinBtn click
-        document.getElementById('scanVinBtn').addEventListener('click', (e) => {
-            // Prevent default form submission if this button is inside the form
-            e.preventDefault(); 
-            // The onclick directly handles the redirection
-            window.location.href='scanner.html?returnUrl=' + encodeURIComponent(window.location.href);
-        });
 
-        // Handle VIN value from scanner.html if redirected back
-        window.addEventListener('load', () => {
-            const params = new URLSearchParams(window.location.search);
-            const scannedVin = params.get('vin');
-            if (scannedVin) {
-                document.getElementById('vin').value = scannedVin;
-                // Optionally trigger VIN decoding immediately
-                document.getElementById('decodeVinBtn').click(); 
-            }
-        });
+            decodeVinBtn.addEventListener('click', function() {
+                const vin = vinInput.value;
+                if (vin.length !== 17) {
+                    alert('Veuillez entrer un VIN de 17 caractères.');
+                    return;
+                }
 
+                // Call a VIN decoding API (this is a placeholder)
+                // In a real application, you'd make an AJAX request to your server-side script
+                // which then calls a third-party VIN decoding service securely.
+                console.log(`Decoding VIN: ${vin}`);
+                // Simulate API response
+                setTimeout(() => {
+                    const mockData = {
+                        make: 'Honda',
+                        model: 'Civic',
+                        year: 2020,
+                        fuel_type: 'Essence',
+                        transmission: 'Automatique'
+                    };
+                    
+                    decodedMarque.textContent = mockData.make;
+                    decodedModele.textContent = mockData.model;
+                    decodedAnnee.textContent = mockData.year;
+                    decodedCarburant.textContent = mockData.fuel_type;
+                    decodedTransmission.textContent = mockData.transmission;
+                    vinDecoderResults.style.display = 'block';
+
+                    // Prefill form fields if data is available
+                    document.getElementById('marque').value = mockData.make;
+                    document.getElementById('modele').value = mockData.model;
+                    document.getElementById('annee').value = mockData.year;
+                    document.getElementById('carburant').value = mockData.fuel_type;
+                    document.getElementById('transmission').value = mockData.transmission;
+
+                }, 1000); // Simulate network delay
+            });
+
+            // Handle form submission
+            const evaluationForm = document.getElementById('evaluationForm');
+            evaluationForm.addEventListener('submit', function(event) {
+                // The form is now configured to submit directly to process_evaluation.php
+                // No need for client-side AJAX here unless you want to prevent default form submission
+                // and handle the response with JavaScript.
+                // If you just want to send the data and let the PHP script redirect,
+                // you don't need event.preventDefault();
+                // If you want to do AJAX submission for feedback without page refresh:
+                // event.preventDefault(); 
+                // Then collect form data including VIN, photos (if processed on client side), etc.
+                // var formData = new FormData(this); // This collects all named fields
+                // uploadedFiles.Exterieur.forEach(file => formData.append('photos[]', file)); // Example for files if sending via AJAX
+                // fetch('process_evaluation.php', { method: 'POST', body: formData })
+                //    .then(response => response.text())
+                //    .then(data => { console.log(data); alert('Évaluation soumise !'); })
+                //    .catch(error => console.error('Error:', error));
+            });
+        });
+        
+        // Helper to get CSS variable values
+        function varCss(variableName) {
+            return getComputedStyle(document.documentElement).getPropertyValue(variableName);
+        }
     </script>
 </body>
 </html>
